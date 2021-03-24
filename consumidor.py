@@ -11,7 +11,7 @@ def main():
     print("Tu dirección de conexión es: ", tuplaConexion)
     opcion = menu()
 
-    while opcion != "SALIR":
+    while opcion != "salir":
         if opcion == '':
             print("Opcion invalida, intenta de nuevo\n")
             opcion = menu()
