@@ -52,18 +52,17 @@ class Mom:
     
 
     def main(self):
-            print('*' * 50)
-            print('El MOM está encendido\n')
-            tuplaConexion = ("0.0.0.0", 8080)
-            self.MOMserver.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-            self.MOMserver.bind(tuplaConexion)
-            self.MOMserver.listen(5)
-            while True:
-                conexionApp, direccionApp = self.MOMserver.accept()
-
-                print(f'Nueva app conectada desde la dirección IP: {direccionApp[0]}')
-                _thread.start_new_thread(self.threaded, (conexionApp, direccionApp))
-            self.MOMserver.close()
+        print('*' * 50)
+        print('El MOM está encendido\n')
+        tuplaConexion = ("0.0.0.0", 8080)
+        self.MOMserver.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        self.MOMserver.bind(tuplaConexion)
+        self.MOMserver.listen(5)
+        while True:
+                    conexionApp, direccionApp = self.MOMserver.accept()
+                    print(f'Nueva app conectada desde la dirección IP: {direccionApp[0]}')
+                    _thread.start_new_thread(self.threaded, (conexionApp, direccionApp))
+                    self.MOMserver.close()
 
 def salir(conexionApp,direccionApp,opcion):
     print(f'{direccionApp[0]} solicita: {opcion}')
@@ -118,10 +117,12 @@ def conectarCola(conexionApp,direccionApp,opcion,self,arreglo):
             if (str(idCola) == str(idAux) and str(nombreCola) == str(nombreAux)):
                 respuesta = f'Respuesta para: {direccionApp[0]} La conexión se establecio correctamente, ahora puedes enviar mensajes\n'
                 self.colas[int(idCola)].conectar()
+            else:
+                respuesta = f'Respuesta para: {direccionApp[0]} La conexión no se pudo establecer, intenta nuevamente\n'
         except:
             respuesta = f'Respuesta para: {direccionApp[0]} Los datos son incorrectos, prueba nuevamente\n'
-            print(f'Se envio respuesta a: {direccionApp[0]} por la solicitud: {opcion}')
-            conexionApp.sendall(respuesta.encode("utf-8"))
+        print(f'Se envio respuesta a: {direccionApp[0]} por la solicitud: {opcion}')
+        conexionApp.sendall(respuesta.encode("utf-8"))
     
 def pullCola(conexionApp,self,direccionApp,arreglo,opcion):
         print(f'{direccionApp[0]} solicita: {opcion}')

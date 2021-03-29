@@ -20,6 +20,7 @@ def main():
             opcion = menuInicial()
         elif (opcion == "crearSesion"):
             crearSesion(opcion)
+            opcion=menuInicial()
         elif (opcion == "iniciarSesion"):
             iniciarSesion(opcion)
             opcion=menu()
@@ -30,16 +31,16 @@ def main():
             listarCola(opcion)
             opcion = menu()
         elif (opcion == "borrarCola"):
-            borrarCola(opcion,idCola)
+            borrarCola(opcion)
             opcion = menu()
         elif (opcion == "conectarCola"):
-            conectarCola(opcion,idCola)
+            conectarCola(opcion)
             opcion = menu()
         elif (opcion == "desconectarCola"):
-            desconectarCola(opcion,idCola)
+            desconectarCola(opcion)
             opcion = menu()
         elif (opcion == "mensajeCola"):
-            mensajeCola(opcion,idCola)
+            mensajeCola(opcion)
             opcion = menu()
         else:
             print("Opcion invalida, intenta de nuevo\n")
@@ -96,6 +97,7 @@ def crearCola(opcion,idCola):
     socketProductor.send(bytes(envioMOM, "utf-8"))
     datosRecibidos = socketProductor.recv(1024)
     print(datosRecibidos.decode("utf-8"))
+    print("El ID es: "+str(idCola))
     idCola=idCola+1
     
     
@@ -109,37 +111,42 @@ def listarCola(opcion):
     print(datosRecibidos.decode("utf-8"))
     
 
-def borrarCola(opcion,idCola):
+def borrarCola(opcion):
     nombreAplicacion = input("Nombre de la cola: ")
+    idCola = input("Ingrese el id de la cola: ")
     envioMOM = opcion + ' ' + nombreAplicacion + ' ' +str(idCola)
     socketProductor.send(bytes(envioMOM, "utf-8"))
     datosRecibidos = socketProductor.recv(1024)
     print(datosRecibidos.decode("utf-8"))
     
 
-def conectarCola(opcion,idCola):
+def conectarCola(opcion):
     nombreAplicacion = input("Nombre de la cola: ")
-    envioMOM = opcion + ' ' + nombreAplicacion + ' ' + idCola
+    idCola = input("Ingresa el token de la cola: ")
+    envioMOM = opcion + ' ' + nombreAplicacion + ' ' + str(idCola)
     socketProductor.send(bytes(envioMOM, "utf-8"))
     datosRecibidos = socketProductor.recv(1024)
     print(datosRecibidos.decode("utf-8"))
     
 
-def desconectarCola(opcion,idCola):
+def desconectarCola(opcion):
     nombreAplicacion = input("Nombre de la cola: ")
-    envioMOM = opcion + ' ' + nombreAplicacion + ' ' + idCola
+    idCola = input("Ingresa el token de la cola ")
+    envioMOM = opcion + ' ' + nombreAplicacion + ' ' + str(idCola)
     socketProductor.send(bytes(envioMOM, "utf-8"))
     datosRecibidos = socketProductor.recv(1024)
     print(datosRecibidos.decode("utf-8"))
     
 
-def mensajeCola(opcion,idCola):
-    nombreAplicacion = input("Nombre de la cola: ")
+def mensajeCola(opcion):
+    nombreAplicacion = input("Ingresa el nombre de la cola correspondiente ")
+    idCola = input("Ingresa el token de identificacion de la cola ")
     mensaje = input("Mensaje a enviar ")
     envioMOM = opcion + ' ' + nombreAplicacion + ' ' + idCola + ' ' + mensaje
     socketProductor.send(bytes(envioMOM, "utf-8"))
     datosRecibidos = socketProductor.recv(1024)
     print(datosRecibidos.decode("utf-8"))
+    opcion = menu()
     
 
 if __name__ == '__main__':

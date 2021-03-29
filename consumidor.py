@@ -51,7 +51,7 @@ def listarCola(opcion):
 def pullCola(opcion):
     nombreAplicacion = input("Nombre de la cola a conectarse: ")
     idCola = input("Token de identificación: ")
-    envioMOM = opcion + ' ' + nombreAplicacion + ' ' + idCola
+    envioMOM = opcion + ' ' + nombreAplicacion + ' ' + str(idCola)
     socketConsumidor.send(bytes(envioMOM, "utf-8"))
     datosRecibidos = socketConsumidor.recv(1024)
     print(datosRecibidos.decode("utf-8"))

@@ -67,3 +67,7 @@ class Queue:
 
 	def vaciarCola(self):
 		self.cola = deque()
+	
+	def getEstado(self):
+    		return self.estado
+	
